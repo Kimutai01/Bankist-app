@@ -27,7 +27,7 @@ const account3 = {
 };
 
 const account4 = {
-  owner: 'Elsie Kemunto',
+  owner: 'Elsie Kemunto Bagwasi',
   movements: [430, 1000, 700, 50, 90],
   interestRate: 1,
   pin: 4444,
@@ -79,6 +79,26 @@ const displayMovements = function (movements) {
 
 displayMovements(account1.movements);
 
+const createUserNames = function (accs) {
+  accs.forEach(function (acc) {
+    acc.username = acc.owner
+      .toLowerCase()
+      .split(' ')
+      .map(name => name[0])
+      .join('');
+  });
+};
+
+createUserNames(accounts);
+console.log(accounts);
+
+const calculateBalance = function (movements) {
+  const balance = movements.reduce((acc, mov) => acc + mov, 0);
+  labelBalance.textContent = `${balance} $`;
+};
+
+calculateBalance(account1.movements);
+
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
 // LECTURES
@@ -105,10 +125,51 @@ const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 //   }
 // }
 
+// const eurToUsd = 1.1;
+
+// const movementUsd = movements.map(mov => {
+//   return mov * eurToUsd;
+// });
+// console.log(movements);
+// console.log(movementUsd);
+
+// const deposits = movements.filter(function (mov) {
+//   return mov > 0;
+// });
+// console.log(movements);
+// console.log(deposits);
+
+// const withdrawals = movements.filter(move => move < 0);
+// console.log(withdrawals);
+console.log(movements);
+
+// const balance = movements.reduce((acc, cur, i, arr) => {
+//   console.log(`Iteration ${1}: ${acc}`);
+//   return acc + cur;
+// }, 0);
+
+// console.log(balance);
+
+// const calcAverageHumanAge = function (ages) {
+//   const humanAges = ages.map(age => (age <= 2 ? 2 * age : 16 + age * 4));
+//   console.log(humanAges);
+
+//   const ExcludedDogs = humanAges.filter(age => age >= 18);
+//   console.log(ExcludedDogs);
+
+//   const average = ExcludedDogs.reduce(
+//     (acc, age) => (acc + age) / ExcludedDogs.length,
+//     0
+//   );
+//   console.log(average);
+// };
+
+// calcAverageHumanAge([5, 2, 4, 1, 15, 8, 3]);
 const eurToUsd = 1.1;
 
-const movementUsd = movements.map(function (mov) {
-  return mov * eurToUsd;
-});
-console.log(movements);
-console.log(movementUsd);
+const totalDepositsUSD = movements
+  .filter(mov => mov > 0)
+  .map(mov => mov * eurToUsd)
+  .reduce((acc, mov) => acc + mov, 0);
+
+console.log(totalDepositsUSD);
